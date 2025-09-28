@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
-import { HackathonNav } from "./hackathonnavigation";
 
 export const Prizes = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -32,8 +31,8 @@ export const Prizes = () => {
   };
 
   return (
-    <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-screen relative">
-      <HackathonNav />
+    <div className="bg-[#1b1a1d] w-full maxx-w-[1728px] min-h-screen relative">
+      
       
       {/* Main content */}
       <div className="ml-[250px] mt-20 p-8">

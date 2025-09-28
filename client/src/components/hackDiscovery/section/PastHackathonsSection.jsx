@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPastHackathons } from "../../../shared/hackathons";
@@ -10,7 +10,7 @@ export const PastHackathonsSection = () => {
   return (
     <section className="flex flex-col w-full items-start gap-4 relative">
       {hackathons.map((hackathon, index) => (
-        <Link key={index} href={`/hackathon/${hackathon.id}`} className="block w-full">
+        <Link key={index} to={`/hackathon/${hackathon.id}`} className="block w-full">
           <Card
             className="flex items-center justify-between p-4 w-full border border-[#2b3640] rounded-2xl bg-transparent hover:bg-[#242425] transition-colors cursor-pointer"
           >

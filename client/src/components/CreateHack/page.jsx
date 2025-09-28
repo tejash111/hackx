@@ -1,62 +1,132 @@
-import React from "react";
-import { Button } from "../../components/ui/button";
-import { Badge } from "../../components/ui/badge"
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
+import React, { useState } from "react";
+import { XIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Import your section components
-import { OverviewSection } from "./sections/overview";
-import { PrizeSection } from "./sections/prizes";
-import { JudgeSection } from "./section/judges";
+import { ElementCreate } from "./sections/overview";
+import { Prizes } from "./sections/prizes";
+import { Judges } from "./sections/judges";
 
 export const CreateHackPage = () => {
-  const steps = [
-    { label: "Overview", active: true },
-    { label: "Prize", active: false },
-    { label: "Judge", active: false },
+  const [activeSection, setActiveSection] = useState("overview");
+
+  const navigationItems = [
+    {
+      id: "overview",
+      label: "Overview",
+      icon: "/figmaAssets/frame-2.svg",
+    },
+    {
+      id: "prizes",
+      label: "Prizes",
+      icon: "/figmaAssets/frame.svg",
+    },
+    {
+      id: "judges",
+      label: "Judges",
+      icon: "/figmaAssets/frame.svg",
+    },
   ];
 
+  const renderCurrentSection = () => {
+    switch (activeSection) {
+      case "overview":
+        return <ElementCreate />;
+      case "prizes":
+        return <Prizes />;
+      case "judges":
+        return <Judges />;
+      default:
+        return <ElementCreate />;
+    }
+  };
+
   return (
-    <div className="bg-[#1b1a1d] w-full max-w-[1728px] min-h-screen relative flex">
-      {/* Sidebar (optional, similar to hackDiscovery) */}
-      <aside className="w-[216px] min-h-screen bg-[#1b1a1d] border-r border-[#242425] flex flex-col">
-        {/* ...Sidebar content if needed... */}
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col">
+    <>
+      {/* Fixed sidebar */}
+      <div className="fixed top-0 left-0 w-[216px] h-full bg-[#1b1a1d] border-r border-[#242425] z-10">
         {/* Header */}
-        <header className="h-[79px] border-b border-[#242425] flex items-center justify-between px-4">
-          <h1 className="text-white text-2xl font-semibold">Create Hackathon</h1>
-          <Avatar className="w-12 h-12">
-            <AvatarFallback className="bg-[#472915] text-white font-normal text-base">
-              U
-            </AvatarFallback>
-          </Avatar>
-        </header>
+        <div className="flex items-center gap-2 p-6 pt-8">
+          <XIcon className="w-5 h-5 text-white" />
+          <div className="text-white text-base font-normal">
+            Save hackathon draft & quit
+          </div>
+        </div>
 
-        {/* Steps Navigation */}
-        <section className="flex gap-4 px-8 py-6">
-          {steps.map((step, idx) => (
-            <Badge
-              key={idx}
-              className={`px-4 py-2 rounded-full ${step.active ? "bg-[#0092ff] text-white" : "bg-[#242425] text-[#949fa8]"}`}
-            >
-              {step.label}
-            </Badge>
-          ))}
-        </section>
+        {/* Top separator line */}
+        <div className="w-full h-px bg-[#242425] mb-6" />
 
-        {/* Sections for Create Hack */}
-        <section className="px-8 py-6 space-y-8">
-          <OverviewSection />
-          <PrizeSection />
-          <JudgeSection />
+        {/* Navigation */}
+        <nav className="px-4">
+          {navigationItems.map((item, index) => {
+            const active = activeSection === item.id;
+            return (
+              <div key={index} className="relative mb-6">
+                {/* Active indicator background */}
+                {active && (
+                  <div className="absolute inset-0 w-52 h-[41px] bg-[#0092ff] rounded-md opacity-20" />
+                )}
+                
+                <div 
+                  onClick={() => setActiveSection(item.id)}
+                  className="flex items-center gap-2 p-2 cursor-pointer"
+                >
+                  <img className="w-4 h-4" alt="Frame" src={item.icon} />
+                  <span
+                    className={`text-sm font-${active ? "semibold" : "normal"} ${
+                      active ? "text-[#0092ff]" : "text-[#949fa8]"
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </nav>
 
-          <Button className="bg-[#0092ff] text-white px-6 py-3 mt-4">
+        {/* Progress indicator */}
+        <div className="absolute left-0 top-20 w-[119px] h-1">
+          <img
+            className="w-full h-full"
+            alt="Rectangle"
+            src="/figmaAssets/rectangle-21.svg"
+          />
+        </div>
+      </div>
+
+      {/* Top header */}
+      <div className="fixed top-0 left-0 right-0 h-20 bg-[#1b1a1d] border-b border-[#242425] z-5">
+        {/* Main title */}
+        <h1 className="absolute top-[30px] left-[calc(50%_-_86px)] text-white text-lg font-bold">
+          Add hackathon info
+        </h1>
+
+        {/* Preview and Publish buttons */}
+        <div className="absolute top-[17px] right-8 flex gap-4">
+          <Button
+            variant="link"
+            className="text-[#0092ff] text-[13.7px] font-bold p-0 h-auto"
+          >
+            Preview publication
+          </Button>
+          <Button className="bg-[#0092ff] text-white text-[13.7px] font-bold px-4 py-3 rounded-lg opacity-40">
+            Publish Hackathon
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className=" pt-20 p-8 bg-[#1b1a1d] min-h-screen">
+        {renderCurrentSection()}
+        
+        {/* Create Hackathon Button */}
+        <div className="mt-8 flex justify-center">
+          <Button className="bg-[#0092ff] text-white px-8 py-3">
             Create Hackathon
           </Button>
-        </section>
-      </main>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };

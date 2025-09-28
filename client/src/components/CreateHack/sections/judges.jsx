@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-import { HackathonNav } from "./hackathonnavigation";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Card, CardContent } from "../../ui/card";
 import { UserIcon, LinkIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -29,8 +28,8 @@ export const Judges = () => {
   };
 
   return (
-    <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-screen relative">
-      <HackathonNav />
+    <div className="bg-[#1b1a1d] w-full max-w-[1728px] min-h-screen relative">
+   
       
       <div className="ml-[250px] mt-20 flex">
         {/* Main content area */}

@@ -2,9 +2,22 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { ElementAllHackatons } from './components/hackDiscovery/page.jsx'
+import { HackathonDetail } from './components/hackDiscovery/detail/page.jsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { CreateHackPage } from './components/CreateHack/page.jsx'
+import { ElementCreateProject } from './components/createProject/ElementCreateProject.jsx'
+
+const router = createBrowserRouter([
+  { path: "/", element: <ElementAllHackatons /> },
+  { path: "/hackathon", element: <ElementAllHackatons /> },
+  { path: "/hackathon/:slug", element: <HackathonDetail /> },
+  { path: "/createhackathon", element: <CreateHackPage /> },
+  {path: "/createproject" , element : <ElementCreateProject/>}
+])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>,
 )
