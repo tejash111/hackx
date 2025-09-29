@@ -1,5 +1,5 @@
 import { CalendarIcon, ChevronDownIcon, ImageIcon, XIcon } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,13 +11,80 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
 export const ElementCreate = () => {
+  // State for all fields
+  const [name, setName] = useState("");
+  const [visual, setVisual] = useState(null);
+  const [shortDesc, setShortDesc] = useState("");
+  const [registrationDuration, setRegistrationDuration] = useState("");
+  const [hackathonDuration, setHackathonDuration] = useState("");
+  const [votingDuration, setVotingDuration] = useState("");
+  const [techStack, setTechStack] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
+  const [location, setLocation] = useState("");
+  const [judgingMode, setJudgingMode] = useState("");
+  const [socialLinks, setSocialLinks] = useState([{ type: "", url: "" }]);
+  const [fullDesc, setFullDesc] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+
+  // Handlers
+  const handleVisualChange = (e) => {
+    setVisual(e.target.files[0]);
+  };
+
+  const handleSocialLinkChange = (idx, field, value) => {
+    const links = [...socialLinks];
+    links[idx][field] = value;
+    setSocialLinks(links);
+  };
+
+  const addSocialLink = () => {
+    setSocialLinks([...socialLinks, { type: "", url: "" }]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setResult(null);
+    try {
+      // Build hackathon object (simplified, expand as needed)
+      const hackathon = {
+        title: name,
+        description: shortDesc,
+        longDescription: fullDesc,
+        techStack,
+        level: experienceLevel,
+        location,
+        socialLinks,
+        registrationDuration,
+        hackathonDuration,
+        votingDuration,
+        judgingMode,
+      };
+      const formData = new FormData();
+      formData.append("hackathon", JSON.stringify(hackathon));
+      if (visual) formData.append("image", visual);
+
+      const resp = await fetch("http://localhost:5000/api/hackathon/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await resp.json();
+      setResult(data);
+    } catch (err) {
+      setResult({ success: false, message: err.message });
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="w-full max-w-5xl mx-auto p-6 space-y-8 bg-[#1b1a1d]">
-      
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-5xl mx-auto p-6 space-y-8 bg-[#1b1a1d]"
+    >
       {/* Hackathon Name */}
       <div className="space-y-3">
         <Label className="text-white text-base font-normal">
@@ -26,6 +93,8 @@ export const ElementCreate = () => {
         <Input
           className="w-full h-16 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400"
           placeholder="Enter hackathon name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -34,22 +103,12 @@ export const ElementCreate = () => {
         <Label className="text-white text-base font-normal">
           Hackathon Visual
         </Label>
-        <Card className="w-full h-80 bg-[#0f1011] rounded-lg border border-[#242425]">
-          <CardContent className="p-8 h-full flex items-center justify-center">
-            <div className="flex flex-col items-center space-y-4">
-              <ImageIcon className="w-12 h-12 text-[#738b9f]" />
-              <div className="text-center text-[#738b9f] text-sm">
-                Drag 'n' drop a hackathon visual here or:
-              </div>
-              <Button
-                variant="link"
-                className="text-[#0092ff] text-sm font-semibold p-0 h-auto"
-              >
-                Click to browse
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleVisualChange}
+          className="mb-2 text-white"
+        />
       </div>
 
       {/* Short Description */}
@@ -60,6 +119,8 @@ export const ElementCreate = () => {
         <Textarea
           className="w-full h-80 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 resize-none"
           placeholder="Short description that goes under key visual"
+          value={shortDesc}
+          onChange={(e) => setShortDesc(e.target.value)}
         />
       </div>
 
@@ -69,49 +130,42 @@ export const ElementCreate = () => {
           <Label className="text-white text-base font-normal">
             Registration Duration
           </Label>
-          <div className="relative">
-            <Input
-              className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
-              placeholder="From — to dates"
-            />
-            <CalendarIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
-          </div>
+          <Input
+            className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
+            placeholder="From — to dates"
+            value={registrationDuration}
+            onChange={(e) => setRegistrationDuration(e.target.value)}
+          />
         </div>
-
         <div className="space-y-3">
           <Label className="text-white text-base font-normal">
             Hackathon Duration
           </Label>
-          <div className="relative">
-            <Input
-              className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
-              placeholder="From — to dates"
-            />
-            <CalendarIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
-          </div>
+          <Input
+            className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
+            placeholder="From — to dates"
+            value={hackathonDuration}
+            onChange={(e) => setHackathonDuration(e.target.value)}
+          />
         </div>
-
         <div className="space-y-3">
           <Label className="text-white text-base font-normal">
             Voting Duration
           </Label>
-          <div className="relative">
-            <Input
-              className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
-              placeholder="From — to dates"
-            />
-            <CalendarIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
-          </div>
+          <Input
+            className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 pr-12"
+            placeholder="From — to dates"
+            value={votingDuration}
+            onChange={(e) => setVotingDuration(e.target.value)}
+          />
         </div>
       </div>
 
       {/* Tech Stack and Experience Level */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-3">
-          <Label className="text-white text-base font-normal">
-            Tech Stack
-          </Label>
-          <Select>
+          <Label className="text-white text-base font-normal">Tech Stack</Label>
+          <Select value={techStack} onValueChange={setTechStack}>
             <SelectTrigger className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white">
               <SelectValue placeholder="Select tech stack" />
             </SelectTrigger>
@@ -123,12 +177,11 @@ export const ElementCreate = () => {
             </SelectContent>
           </Select>
         </div>
-
         <div className="space-y-3">
           <Label className="text-white text-base font-normal">
             Experience Level
           </Label>
-          <Select>
+          <Select value={experienceLevel} onValueChange={setExperienceLevel}>
             <SelectTrigger className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white">
               <SelectValue placeholder="Select experience level" />
             </SelectTrigger>
@@ -151,14 +204,15 @@ export const ElementCreate = () => {
           <Input
             className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400"
             placeholder="Enter hackathon location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
         </div>
-
         <div className="space-y-3">
           <Label className="text-white text-base font-normal">
             Judging Mode
           </Label>
-          <Select>
+          <Select value={judgingMode} onValueChange={setJudgingMode}>
             <SelectTrigger className="w-full h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white">
               <SelectValue placeholder="Judges Only" />
             </SelectTrigger>
@@ -173,28 +227,37 @@ export const ElementCreate = () => {
 
       {/* Social Links */}
       <div className="space-y-3">
-        <Label className="text-white text-base font-normal">
-          Social Links
-        </Label>
-        <div className="flex gap-4">
-          <Select>
-            <SelectTrigger className="w-48 h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white">
-              <SelectValue placeholder="x.com" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="twitter">x.com</SelectItem>
-              <SelectItem value="linkedin">linkedin.com</SelectItem>
-              <SelectItem value="discord">discord.com</SelectItem>
-            </SelectContent>
-          </Select>
-          <Input
-            className="flex-1 h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400"
-            placeholder="Enter link to x.com"
-          />
-        </div>
+        <Label className="text-white text-base font-normal">Social Links</Label>
+        {socialLinks.map((link, idx) => (
+          <div className="flex gap-4 mb-2" key={idx}>
+            <Select
+              value={link.type}
+              onValueChange={(val) => handleSocialLinkChange(idx, "type", val)}
+            >
+              <SelectTrigger className="w-48 h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white">
+                <SelectValue placeholder="x.com" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="twitter">x.com</SelectItem>
+                <SelectItem value="linkedin">linkedin.com</SelectItem>
+                <SelectItem value="discord">discord.com</SelectItem>
+              </SelectContent>
+            </Select>
+            <Input
+              className="flex-1 h-14 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400"
+              placeholder="Enter link to x.com"
+              value={link.url}
+              onChange={(e) =>
+                handleSocialLinkChange(idx, "url", e.target.value)
+              }
+            />
+          </div>
+        ))}
         <Button
           variant="link"
           className="text-[#0092ff] text-lg font-normal p-0 h-auto"
+          type="button"
+          onClick={addSocialLink}
         >
           + add another link
         </Button>
@@ -205,39 +268,42 @@ export const ElementCreate = () => {
         <Label className="text-white text-base font-normal">
           Full Description
         </Label>
-        <Card className="w-full bg-[#0f1011] rounded-lg border border-[#242425]">
-          <CardContent className="p-6">
-            {/* Rich Text Editor Toolbar */}
-            <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-[#242425]">
-              <div className="flex items-center gap-2 bg-[#2b3740] rounded px-3 py-2">
-                <span className="text-white text-sm font-medium">Paragraph text</span>
-                <ChevronDownIcon className="w-4 h-4 text-white" />
-              </div>
-              
-              <div className="flex items-center bg-[#2b3740] rounded">
-                <Button variant="ghost" size="sm" className="text-white hover:bg-[#3a4a55]">-</Button>
-                <span className="px-2 text-white text-sm">14</span>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-[#3a4a55]">+</Button>
-              </div>
-              
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="sm" className="text-white hover:bg-[#3a4a55]">B</Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-[#3a4a55]">I</Button>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-[#3a4a55]">U</Button>
-              </div>
-            </div>
-            
-            {/* Text Editor Area */}
-            <div className="min-h-96 w-full text-white">
-              <Textarea
-                className="w-full min-h-96 bg-transparent border-none text-white placeholder:text-gray-400 resize-none focus:outline-none"
-                placeholder="Write your full hackathon description here..."
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <Textarea
+          className="w-full min-h-96 bg-transparent border-none text-white placeholder:text-gray-400 resize-none focus:outline-none"
+          placeholder="Write your full hackathon description here..."
+          value={fullDesc}
+          onChange={(e) => setFullDesc(e.target.value)}
+        />
       </div>
 
-    </div>
+      <Button
+        type="submit"
+        className="w-full h-14 bg-[#0092ff] text-white text-lg font-semibold rounded-lg"
+        disabled={loading}
+      >
+        {loading ? "Submitting..." : "Create Hackathon"}
+      </Button>
+      {result && (
+        <div className="mt-4 text-white">
+          {result.success ? (
+            <div>
+              <div>
+                Success! IPFS Metadata URL:{" "}
+                <a
+                  href={result.metadataUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-blue-400"
+                >
+                  {result.metadataUrl}
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div>Error: {result.message}</div>
+          )}
+        </div>
+      )}
+    </form>
   );
 };
