@@ -13,7 +13,7 @@ import { JudgeRegister } from './components/auth/judgeRegister.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <ElementAllHackatons /> },
-  { path: "/hackathon", element: <ElementAllHackatons /> },
+  { path: "/hackathons", element: <ElementAllHackatons /> },
   { path: "/hackathon/:slug", element: <HackathonDetail /> },
   { path: "/createhackathon", element: <CreateHackPage /> },
   {path: "/createproject" , element : <ElementCreateProject/>},

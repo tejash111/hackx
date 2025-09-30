@@ -29,6 +29,7 @@ export const ElementCreate = () => {
   const [fullDesc, setFullDesc] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  
 
   // Handlers
   const handleVisualChange = (e) => {
@@ -50,20 +51,22 @@ export const ElementCreate = () => {
     setLoading(true);
     setResult(null);
     try {
-      // Build hackathon object (simplified, expand as needed)
       const hackathon = {
-        title: name,
-        description: shortDesc,
-        longDescription: fullDesc,
-        techStack,
-        level: experienceLevel,
-        location,
-        socialLinks,
+        name,
+        shortDesc,
+        fullDesc,
         registrationDuration,
         hackathonDuration,
         votingDuration,
+        techStack,
+        experienceLevel,
+        location,
         judgingMode,
+        socialLinks,
       };
+     
+      
+      
       const formData = new FormData();
       formData.append("hackathon", JSON.stringify(hackathon));
       if (visual) formData.append("image", visual);

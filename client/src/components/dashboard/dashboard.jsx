@@ -8,93 +8,16 @@ import { OpenVotingSection } from "./sections/OpenVotingSection";
 import { RegisteredHackathonsSection } from "./sections/RegisteredHackathonsSection";
 import { UpcomingHackathonsSection } from "./sections/UpcomingHackathonsSection";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../sidebar";
 
-const sidebarItems = [
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Quest",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-];
 
-const certificationItems = [
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "My Certifications",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Explore Course",
-    active: false,
-    textColor: "text-[#949fa8]",
-   
-  },
-];
-
-const dashboardItems = [
-  {
-    icon: "/figmaAssets/frame-5.svg",
-    label: "Dashboard",
-    active: true,
-    textColor: "text-[#0092ff]",
-  },
-  {
-    icon: "/figmaAssets/frame-8.svg",
-    label: "Explore Hackatons",
-    active: false,
-    textColor: "text-[#949fa8]",
-     link:"/hackathon"
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Project Archive",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-];
-
-const communityItems = [
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Community Events",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Learning Camps",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Discussion & Support",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "Advocate Program",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-  {
-    icon: "/figmaAssets/frame.svg",
-    label: "More",
-    active: false,
-    textColor: "text-[#949fa8]",
-  },
-];
 
 export const ElementDashboard = () => {
   const navigate=useNavigate()
   return (
-    <div className="bg-[#1b1a1d] w-full max-w-[1728px] min-h-screen flex">
+    <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-screen flex">
       {/* Sidebar */}
-     
+      <Sidebar/>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col">

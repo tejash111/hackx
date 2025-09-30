@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PastHackathonsSection } from "./section/PastHackathonsSection";
 import { RegistrationInfoSection } from "./section/RegistrationInfoSection";
 import { UpcomingHackathonsSection } from "./section/UpcomingHackathonsSection";
+import Sidebar from "../sidebar";
 
 export const ElementAllHackatons = () => {
   const navigationItems = [
@@ -73,107 +74,9 @@ export const ElementAllHackatons = () => {
   const paginationDots = [{ active: true }, { active: false }, { active: false }];
 
   return (
-    <div className="bg-[#1b1a1d] w-full max-w-[1728px] min-h-screen relative flex">
+    <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-screen relative flex">
       {/* Sidebar */}
-      <aside className="w-[216px] min-h-screen bg-[#1b1a1d] border-r border-[#242425] flex flex-col">
-        {/* Logo */}
-      
-
-        {/* Navigation Sections */}
-        <nav className="flex-1 px-0 fixed">
-          {/* Quest Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <div className="px-6 space-y-6">
-              {navigationItems.map((item, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <img className="w-4 h-4" alt="Frame" src={item.icon} />
-                  <span className="[font-family:'Inter',Helvetica] font-normal text-[#949fa8] text-sm">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Certifications Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <div className="px-6 space-y-6">
-              {certificationItems.map((item, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <img className="w-4 h-4" alt="Frame" src={item.icon} />
-                  <span className="[font-family:'Inter',Helvetica] font-normal text-[#949fa8] text-sm">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dashboard Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <div className="px-6 space-y-4">
-              {/* Active item highlight */}
-              <div className="absolute left-1 w-52 h-[41px] bg-[#0092ff] rounded-md opacity-20" />
-              {dashboardItems.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 relative">
-                  <img className="w-4 h-4" alt="Frame" src={item.icon} />
-                  <span
-                    className={`[font-family:'Inter',Helvetica] text-sm ${
-                      item.active
-                        ? "font-semibold text-[#0092ff]"
-                        : "font-normal text-[#949fa8]"
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Community Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <div className="px-6 space-y-4">
-              {communityItems.map((item, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <img className="w-4 h-4" alt="Frame" src={item.icon} />
-                  <span className="[font-family:'Inter',Helvetica] font-normal text-[#949fa8] text-sm">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </nav>
-      </aside>
+     <Sidebar/>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col">

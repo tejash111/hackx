@@ -5,6 +5,7 @@ import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { getHackathonById } from "../../../shared/hackathons";
 import { ArrowLeft, Search, Share, Bell, User } from "lucide-react";
+import Sidebar from "../../sidebar";
 
 export const HackathonDetail = () => {
   const { slug } = useParams();
@@ -149,105 +150,9 @@ export const HackathonDetail = () => {
   }
 
   return (
-    <div className="bg-[#1b1a1d] w-full max-w-[1728px] min-h-screen relative flex">
+    <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-screen relative flex">
       {/* Sidebar */}
-      <aside className="w-[216px] min-h-screen bg-[#1b1a1d] border-r border-[#242425] flex flex-col">
-        {/* Logo */}
-        <div className="p-6">
-          
-        </div>
-
-        {/* Navigation Sections */}
-        <nav className="flex-1 px-0 fixed">
-          {/* Quest Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <ul className="space-y-1">
-              {navigationItems.map((item, index) => (
-                <li key={index}>
-                  <button className="w-full flex items-center gap-3 px-6 py-2 text-left text-white/60 hover:text-white hover:bg-[#242425] transition-colors">
-                    <img src={item.icon} alt="" className="w-4 h-4" />
-                    <span className="text-sm">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Certification Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <ul className="space-y-1">
-              {certificationItems.map((item, index) => (
-                <li key={index}>
-                  <button className="w-full flex items-center gap-3 px-6 py-2 text-left text-white/60 hover:text-white hover:bg-[#242425] transition-colors">
-                    <img src={item.icon} alt="" className="w-4 h-4" />
-                    <span className="text-sm">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Dashboard Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <ul className="space-y-1">
-              {dashboardItems.map((item, index) => (
-                <li key={index}>
-                  <button className={`w-full flex items-center gap-3 px-6 py-2 text-left transition-colors ${
-                    item.active 
-                      ? "text-white bg-[#242425]" 
-                      : "text-white/60 hover:text-white hover:bg-[#242425]"
-                  }`}>
-                    <img src={item.icon} alt="" className="w-4 h-4" />
-                    <span className="text-sm">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Community Section */}
-          <div className="mb-6">
-            <div className="px-6 py-2">
-              <img
-                className="w-[184px] h-px"
-                alt="Line"
-                src="/figmaAssets/line-7.svg"
-              />
-            </div>
-            <ul className="space-y-1">
-              {communityItems.map((item, index) => (
-                <li key={index}>
-                  <button className="w-full flex items-center gap-3 px-6 py-2 text-left text-white/60 hover:text-white hover:bg-[#242425] transition-colors">
-                    <img src={item.icon} alt="" className="w-4 h-4" />
-                    <span className="text-sm">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
-      </aside>
+      <Sidebar/>
 
       {/* Main Content */}
       <main className="flex-1 min-h-screen">
