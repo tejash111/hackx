@@ -1,37 +1,20 @@
 import Joi from "joi";
 
 export const hackathonSchema = Joi.object({
-  id: Joi.string().required(),
   title: Joi.string().required(),
-  status: Joi.string().required(),
-  statusColor: Joi.string().required(),
   description: Joi.string().required(),
   longDescription: Joi.string().required(),
-  registrationLabel: Joi.string().required(),
-  registrationValue: Joi.string().required(),
   techStack: Joi.string().required(),
   level: Joi.string().required(),
-  totalPrize: Joi.string().required(),
-  participants: Joi.string().required(),
-  image: Joi.string().required(),
-  type: Joi.string().valid("upcoming", "past", "live").required(),
-  organizer: Joi.string().required(),
-  startDate: Joi.string().required(),
-  endDate: Joi.string().required(),
   location: Joi.string().required(),
-  requirements: Joi.array().items(Joi.string()).required(),
-  prizes: Joi.object({
-    first: Joi.string().required(),
-    second: Joi.string().required(),
-    third: Joi.string().required(),
-  }).required(),
-  sponsors: Joi.array().items(Joi.string()).required(),
-  timeline: Joi.object({
-    registrationStart: Joi.string().required(),
-    registrationEnd: Joi.string().required(),
-    hackathonStart: Joi.string().required(),
-    hackathonEnd: Joi.string().required(),
-    judging: Joi.string().required(),
-    resultsAnnounced: Joi.string().required(),
-  }).required(),
+  socialLinks: Joi.array().items(
+    Joi.object({
+      type: Joi.string().required(),
+      url: Joi.string().uri().required(),
+    })
+  ),
+  registrationDuration: Joi.string().required(),
+  hackathonDuration: Joi.string().required(),
+  votingDuration: Joi.string().required(),
+  judgingMode: Joi.string().valid("judges", "public", "hybrid").required(),
 });
