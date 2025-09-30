@@ -7,13 +7,19 @@ import { HackathonDetail } from './components/hackDiscovery/detail/page.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { CreateHackPage } from './components/CreateHack/page.jsx'
 import { ElementCreateProject } from './components/createProject/ElementCreateProject.jsx'
+import { ElementDashboard } from './components/dashboard/dashboard.jsx'
+import { ElementProjectLogin } from './components/auth/projectLogin.jsx'
+import { JudgeRegister } from './components/auth/judgeRegister.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <ElementAllHackatons /> },
   { path: "/hackathon", element: <ElementAllHackatons /> },
   { path: "/hackathon/:slug", element: <HackathonDetail /> },
   { path: "/createhackathon", element: <CreateHackPage /> },
-  {path: "/createproject" , element : <ElementCreateProject/>}
+  {path: "/createproject" , element : <ElementCreateProject/>},
+   {path: "/dashboard" , element : <ElementDashboard/>},
+  {path: "/login" , element : <ElementProjectLogin/>},
+  {path: "/judge-register" , element : <JudgeRegister/>}
 ])
 
 createRoot(document.getElementById('root')).render(

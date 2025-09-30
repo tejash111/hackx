@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { ElementCreate } from "./sections/overview";
 import { Prizes } from "./sections/prizes";
 import { Judges } from "./sections/judges";
+import Schdule from "./sections/schdule";
 
 export const CreateHackPage = () => {
   const [activeSection, setActiveSection] = useState("overview");
+  const [data,setData]=useState()
 
   const navigationItems = [
     {
@@ -26,18 +28,45 @@ export const CreateHackPage = () => {
       label: "Judges",
       icon: "/figmaAssets/frame.svg",
     },
+    {
+      id : "schdule",
+      label : "Schdule",
+      icon : "/figmaAssets/frame.svg"
+    }
   ];
+
+  // Get current section index
+  const currentSectionIndex = navigationItems.findIndex(item => item.id === activeSection);
+  
+  // Navigation functions
+  const goToNext = () => {
+    if (currentSectionIndex < navigationItems.length - 1) {
+      setActiveSection(navigationItems[currentSectionIndex + 1].id);
+    }
+  };
+
+  const goToPrevious = () => {
+    if (currentSectionIndex > 0) {
+      setActiveSection(navigationItems[currentSectionIndex - 1].id);
+    }
+  };
+
+  // Check if buttons should be disabled
+  const isFirstSection = currentSectionIndex === 0;
+  const isLastSection = currentSectionIndex === navigationItems.length - 1;
 
   const renderCurrentSection = () => {
     switch (activeSection) {
       case "overview":
-        return <ElementCreate />;
+        return <ElementCreate data={data}/>;
       case "prizes":
-        return <Prizes />;
+        return <Prizes data={data}/>;
       case "judges":
-        return <Judges />;
+        return <Judges data={data}/>;
+      case "schdule":
+        return <Schdule data={data}/>
       default:
-        return <ElementCreate />;
+        return <ElementCreate data={data}/>;
     }
   };
 
@@ -120,10 +149,29 @@ export const CreateHackPage = () => {
       <div className=" pt-20 p-8 bg-[#1b1a1d] min-h-screen">
         {renderCurrentSection()}
         
-        {/* Create Hackathon Button */}
-        <div className="mt-8 flex justify-center">
-          <Button className="bg-[#0092ff] text-white px-8 py-3">
-            Create Hackathon
+        {/* Navigation Buttons */}
+        <div className="mt-8 flex justify-center gap-40">
+          <Button 
+            onClick={goToPrevious}
+            disabled={isFirstSection}
+            className={`px-8 py-3 ${
+              isFirstSection 
+                ? 'bg-blue-500 text-white cursor-not-allowed' 
+                : 'bg-[#0092ff] text-white hover:bg-[#0092ff]/90'
+            }`}
+          >
+            Previous
+          </Button>
+          <Button 
+            onClick={goToNext}
+            disabled={isLastSection}
+            className={`px-8 py-3 ${
+              isLastSection 
+                ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                : 'bg-[#0092ff] text-white hover:bg-[#0092ff]/90'
+            }`}
+          >
+            {isLastSection ? 'Create Hackathon' : 'Next'}
           </Button>
         </div>
       </div>
