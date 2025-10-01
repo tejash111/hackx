@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "wouter";
 
-export const JudgeDashboardProjects = (): JSX.Element => {
+export const JudgeDashboardProjects = () => {
   const navigationItems = [
     {
       icon: "/figmaAssets/frame-5.svg",
