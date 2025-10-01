@@ -8,6 +8,36 @@ const App = () => {
       <ElementAllHackatons />
      
      <CreateHackPage/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
     </div>
   )
 }
