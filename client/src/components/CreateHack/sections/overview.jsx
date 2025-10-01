@@ -1,5 +1,5 @@
 import { CalendarIcon, ChevronDownIcon, ImageIcon, XIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useMyContext } from "../../../context/createHackContext";
 
 export const ElementCreate = () => {
   // State for all fields
@@ -27,9 +28,33 @@ export const ElementCreate = () => {
   const [judgingMode, setJudgingMode] = useState("");
   const [socialLinks, setSocialLinks] = useState([{ type: "", url: "" }]);
   const [fullDesc, setFullDesc] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  
+
+  // Create hackathon data object
+   const {createHackData,setCreateHackData}=useMyContext()
+   console.log(createHackData);
+   
+
+  // Update hackathon data whenever any field changes
+  useEffect(() => {
+    const updatedData = {
+      name,
+      visual,
+      shortDesc,
+      registrationDuration,
+      hackathonDuration,
+      votingDuration,
+      techStack,
+      experienceLevel,
+      location,
+      judgingMode,
+      socialLinks,
+      fullDesc,
+    };
+    setCreateHackData((prev)=>({
+      ...prev,
+      ...updatedData
+    }))
+  }, [name, visual, shortDesc, registrationDuration, hackathonDuration, votingDuration, techStack, experienceLevel, location, judgingMode, socialLinks, fullDesc]);
 
   // Handlers
   const handleVisualChange = (e) => {
@@ -46,48 +71,8 @@ export const ElementCreate = () => {
     setSocialLinks([...socialLinks, { type: "", url: "" }]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setResult(null);
-    try {
-      const hackathon = {
-        name,
-        shortDesc,
-        fullDesc,
-        registrationDuration,
-        hackathonDuration,
-        votingDuration,
-        techStack,
-        experienceLevel,
-        location,
-        judgingMode,
-        socialLinks,
-      };
-     
-      
-      
-      const formData = new FormData();
-      formData.append("hackathon", JSON.stringify(hackathon));
-      if (visual) formData.append("image", visual);
-
-      const resp = await fetch("http://localhost:5000/api/hackathon/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await resp.json();
-      setResult(data);
-    } catch (err) {
-      setResult({ success: false, message: err.message });
-    }
-    setLoading(false);
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-5xl mx-auto p-6 space-y-8 bg-[#1b1a1d]"
-    >
+    <div className="w-full max-w-5xl mx-auto p-6 space-y-8 bg-[#1b1a1d]">
       {/* Hackathon Name */}
       <div className="space-y-3">
         <Label className="text-white text-base font-normal">
@@ -272,41 +257,18 @@ export const ElementCreate = () => {
           Full Description
         </Label>
         <Textarea
-          className="w-full min-h-96 bg-transparent border-none text-white placeholder:text-gray-400 resize-none focus:outline-none"
+          className="w-full min-h-96 bg-[#0f1011] rounded-lg border border-[#242425] text-white placeholder:text-gray-400 resize-none focus:outline-none"
           placeholder="Write your full hackathon description here..."
           value={fullDesc}
           onChange={(e) => setFullDesc(e.target.value)}
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full h-14 bg-[#0092ff] text-white text-lg font-semibold rounded-lg"
-        disabled={loading}
-      >
-        {loading ? "Submitting..." : "Create Hackathon"}
-      </Button>
-      {result && (
-        <div className="mt-4 text-white">
-          {result.success ? (
-            <div>
-              <div>
-                Success! IPFS Metadata URL:{" "}
-                <a
-                  href={result.metadataUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline text-blue-400"
-                >
-                  {result.metadataUrl}
-                </a>
-              </div>
-            </div>
-          ) : (
-            <div>Error: {result.message}</div>
-          )}
-        </div>
-      )}
-    </form>
+      {/* Save Status */}
+      <div className="text-center text-gray-400">
+        <p>Form data is automatically collected in hackathonData object</p>
+        <p className="text-xs mt-2">Check console to see current data</p>
+      </div>
+    </div>
   );
 };

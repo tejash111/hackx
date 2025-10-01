@@ -15,19 +15,91 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMyContext } from "../../../context/createHackContext";
 
 export const Prizes = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [prizeComorts, setPrizeCohorts] = useState([{ id: 1 }]);
-  const [evaluationCriteria, setEvaluationCriteria] = useState([{ id: 1 }]);
+   const {createHackData,setCreateHackData}=useMyContext()
+   console.log(createHackData);
+   
+  
+  // Prize cohorts state - each cohort has its own fields
+  const [prizeCohorts, setPrizeCohorts] = useState([{
+    id: 1,
+    name: "",
+    numberOfWinners: "",
+    prizeAmount: "",
+    description: "",
+    evaluationCriteria: [{
+      id: 1,
+      name: "",
+      points: "",
+      description: ""
+    }],
+    votingMode: "project-scoring",
+    maxVotePerJudge: ""
+  }]);
 
-  const addPrizeCohort = () => {
-    setPrizeCohorts([...prizeComorts, { id: Date.now() }]);
+ 
+
+  // Update prizes data whenever any field changes
+  useEffect(() => {
+    const updatedData = {
+      prizeCohorts,
+      totalCohorts: prizeCohorts.length,
+      lastUpdated: new Date().toISOString()
+    };
+    setCreateHackData((prev)=>({
+      ...prev,
+      ...updatedData
+    }))
+   
+  }, [prizeCohorts]);
+
+  // Handler to update a specific cohort field
+  const updateCohortField = (cohortIndex, field, value) => {
+    const updatedCohorts = [...prizeCohorts];
+    updatedCohorts[cohortIndex][field] = value;
+    setPrizeCohorts(updatedCohorts);
   };
 
-  const addEvaluationCriteria = () => {
-    setEvaluationCriteria([...evaluationCriteria, { id: Date.now() }]);
+  // Handler to update evaluation criteria
+  const updateEvaluationCriteria = (cohortIndex, criteriaIndex, field, value) => {
+    const updatedCohorts = [...prizeCohorts];
+    updatedCohorts[cohortIndex].evaluationCriteria[criteriaIndex][field] = value;
+    setPrizeCohorts(updatedCohorts);
+  };
+
+  const addPrizeCohort = () => {
+    const newCohort = {
+      id: Date.now(),
+      name: "",
+      numberOfWinners: "",
+      prizeAmount: "",
+      description: "",
+      evaluationCriteria: [{
+        id: Date.now(),
+        name: "",
+        points: "",
+        description: ""
+      }],
+      votingMode: "project-scoring",
+      maxVotePerJudge: ""
+    };
+    setPrizeCohorts([...prizeCohorts, newCohort]);
+  };
+
+  const addEvaluationCriteria = (cohortIndex) => {
+    const updatedCohorts = [...prizeCohorts];
+    const newCriteria = {
+      id: Date.now(),
+      name: "",
+      points: "",
+      description: ""
+    };
+    updatedCohorts[cohortIndex].evaluationCriteria.push(newCriteria);
+    setPrizeCohorts(updatedCohorts);
   };
 
   return (
@@ -36,7 +108,7 @@ export const Prizes = () => {
       
       {/* Main content */}
       <div className="ml-[250px] mt-20 p-8">
-        {prizeComorts.map((cohort, cohortIndex) => (
+        {prizeCohorts.map((cohort, cohortIndex) => (
           <div key={cohort.id} className="mb-8">
             {/* Prize Cohort Name */}
             <div className="mb-6">
@@ -46,6 +118,8 @@ export const Prizes = () => {
               <Input
                 className="w-[600px] h-14 bg-[#0f1011] border border-[#242425] text-white rounded-lg"
                 placeholder="Enter prize cohort name"
+                value={cohort.name}
+                onChange={(e) => updateCohortField(cohortIndex, 'name', e.target.value)}
                 data-testid={`prize-cohort-name-${cohortIndex}`}
               />
             </div>
@@ -69,7 +143,7 @@ export const Prizes = () => {
                       <Label className="text-white text-base font-normal mb-3 block">
                         Number of winners
                       </Label>
-                      <Select>
+                      <Select value={cohort.numberOfWinners} onValueChange={(value) => updateCohortField(cohortIndex, 'numberOfWinners', value)}>
                         <SelectTrigger className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white">
                           <SelectValue placeholder="Number of winners" />
                         </SelectTrigger>
@@ -90,6 +164,8 @@ export const Prizes = () => {
                       <Input
                         className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white"
                         placeholder="USD/tokens per winner"
+                        value={cohort.prizeAmount}
+                        onChange={(e) => updateCohortField(cohortIndex, 'prizeAmount', e.target.value)}
                         data-testid={`prize-amount-${cohortIndex}`}
                       />
                     </div>
@@ -103,12 +179,14 @@ export const Prizes = () => {
                     <Textarea
                       className="w-full h-[200px] bg-[#0f1011] border border-[#242425] text-white resize-none"
                       placeholder="Prize cohort description"
+                      value={cohort.description}
+                      onChange={(e) => updateCohortField(cohortIndex, 'description', e.target.value)}
                       data-testid={`prize-description-${cohortIndex}`}
                     />
                   </div>
 
                   {/* Evaluation Criteria */}
-                  {evaluationCriteria.map((criteria, criteriaIndex) => (
+                  {cohort.evaluationCriteria.map((criteria, criteriaIndex) => (
                     <div key={criteria.id} className="space-y-4">
                       <div className="flex gap-6">
                         <div className="flex-1">
@@ -118,6 +196,8 @@ export const Prizes = () => {
                           <Input
                             className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white"
                             placeholder="Enter evaluation criteria name"
+                            value={criteria.name}
+                            onChange={(e) => updateEvaluationCriteria(cohortIndex, criteriaIndex, 'name', e.target.value)}
                             data-testid={`criteria-name-${cohortIndex}-${criteriaIndex}`}
                           />
                         </div>
@@ -128,7 +208,9 @@ export const Prizes = () => {
                           </Label>
                           <Input
                             className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white"
-                            placeholder="Enter evaluation criteria name"
+                            placeholder="Enter number of points"
+                            value={criteria.points}
+                            onChange={(e) => updateEvaluationCriteria(cohortIndex, criteriaIndex, 'points', e.target.value)}
                             data-testid={`criteria-points-${cohortIndex}-${criteriaIndex}`}
                           />
                         </div>
@@ -141,6 +223,8 @@ export const Prizes = () => {
                         <Textarea
                           className="w-full h-[200px] bg-[#0f1011] border border-[#242425] text-white resize-none"
                           placeholder="Enter evaluation criteria description"
+                          value={criteria.description}
+                          onChange={(e) => updateEvaluationCriteria(cohortIndex, criteriaIndex, 'description', e.target.value)}
                           data-testid={`criteria-description-${cohortIndex}-${criteriaIndex}`}
                         />
                       </div>
@@ -151,7 +235,7 @@ export const Prizes = () => {
                   <Button
                     variant="link"
                     className="text-[#0092ff] p-0 h-auto font-normal"
-                    onClick={addEvaluationCriteria}
+                    onClick={() => addEvaluationCriteria(cohortIndex)}
                     data-testid={`add-criteria-${cohortIndex}`}
                   >
                     + add evaluation criteria
@@ -163,7 +247,7 @@ export const Prizes = () => {
                       <Label className="text-white text-base font-normal mb-3 block">
                         Voting Mode
                       </Label>
-                      <Select defaultValue="project-scoring">
+                      <Select value={cohort.votingMode} onValueChange={(value) => updateCohortField(cohortIndex, 'votingMode', value)}>
                         <SelectTrigger className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white">
                           <SelectValue />
                         </SelectTrigger>
@@ -179,7 +263,7 @@ export const Prizes = () => {
                       <Label className="text-white text-base font-normal mb-3 block">
                         Max vote per judge
                       </Label>
-                      <Select>
+                      <Select value={cohort.maxVotePerJudge} onValueChange={(value) => updateCohortField(cohortIndex, 'maxVotePerJudge', value)}>
                         <SelectTrigger className="w-full h-14 bg-[#0f1011] border border-[#242425] text-white">
                           <SelectValue placeholder="Enter points" />
                         </SelectTrigger>
@@ -207,6 +291,12 @@ export const Prizes = () => {
         >
           + add another prize cohort
         </Button>
+
+        {/* Data Status */}
+        <div className="mt-8 text-center text-gray-400">
+          <p>Prize data is automatically collected in prizesData object</p>
+          <p className="text-xs mt-2">Check console to see current data</p>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -7,10 +7,11 @@ import { ElementCreate } from "./sections/overview";
 import { Prizes } from "./sections/prizes";
 import { Judges } from "./sections/judges";
 import Schdule from "./sections/schdule";
+import { useMyContext } from "../../context/createHackContext";
 
 export const CreateHackPage = () => {
   const [activeSection, setActiveSection] = useState("overview");
-  const [data,setData]=useState()
+  const {createHackData,setCreateHackData}=useMyContext()
 
   const navigationItems = [
     {
@@ -58,15 +59,15 @@ export const CreateHackPage = () => {
   const renderCurrentSection = () => {
     switch (activeSection) {
       case "overview":
-        return <ElementCreate data={data}/>;
+        return <ElementCreate />;
       case "prizes":
-        return <Prizes data={data}/>;
+        return <Prizes />;
       case "judges":
-        return <Judges data={data}/>;
+        return <Judges/>;
       case "schdule":
-        return <Schdule data={data}/>
+        return <Schdule />
       default:
-        return <ElementCreate data={data}/>;
+        return <ElementCreate />;
     }
   };
 

@@ -1,11 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Label } from '../../ui/label'
 import { Input } from '../../ui/input'
 import { Button } from '../../ui/button'
 import { Card, CardContent } from '../../ui/card'
-import { date } from 'drizzle-orm/mysql-core'
+import { useMyContext } from '../../../context/createHackContext'
 
 const Schdule = () => {
+  // Schedule state
+  const [endRegistration, setEndRegistration] = useState({
+    from: "",
+    to: ""
+  });
+  const [openingCeremony, setOpeningCeremony] = useState({
+    dateTime: "",
+    status: ""
+  });
+  const [submission, setSubmission] = useState({
+    from: "",
+    to: "",
+    status: ""
+  });
+  const [rewardAnnouncement, setRewardAnnouncement] = useState({
+    dateTime: ""
+  });
+  const [awardCeremony, setAwardCeremony] = useState({
+    dateTime: ""
+  });
+
+  // Speaker state
   const [showSpeakerForm, setShowSpeakerForm] = useState(false);
   const [speakerForm, setSpeakerForm] = useState({
     name: "",
@@ -14,6 +36,60 @@ const Schdule = () => {
     workPlace: "",
     picture: null
   });
+  const [speakers, setSpeakers] = useState([]);
+
+  // Complete schedule data object
+  const {createHackData,setCreateHackData}=useMyContext()
+
+  console.log(createHackData);
+  
+  useEffect(() => {
+    const updatedData = {
+      endRegistration,
+      openingCeremony,
+      submission,
+      rewardAnnouncement,
+      awardCeremony,
+      speakers,
+      includeSpeaker: showSpeakerForm,
+      lastUpdated: new Date().toISOString()
+    };
+     setCreateHackData((prev)=>({
+      ...prev,
+      ...updatedData
+    }))
+   
+  }, [endRegistration, openingCeremony, submission, rewardAnnouncement, awardCeremony, speakers, showSpeakerForm]);
+
+  // Handler functions
+  const handleEndRegistrationChange = (field, value) => {
+    setEndRegistration(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleOpeningCeremonyChange = (field, value) => {
+    setOpeningCeremony(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmissionChange = (field, value) => {
+    setSubmission(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleRewardAnnouncementChange = (value) => {
+    setRewardAnnouncement({ dateTime: value });
+  };
+
+  const handleAwardCeremonyChange = (value) => {
+    setAwardCeremony({ dateTime: value });
+  };
 
   const handleInputChange = (field, value) => {
     setSpeakerForm(prev => ({
@@ -33,16 +109,17 @@ const Schdule = () => {
   };
 
   const addSpeaker = () => {
-    console.log('Speaker added:', speakerForm);
-    // Add your logic here to save the speaker
-    setSpeakerForm({
-      name: "",
-      link: "",
-      realName: "",
-      workPlace: "",
-      picture: null
-    });
-    setShowSpeakerForm(false);
+    if (speakerForm.name.trim()) {
+      setSpeakers(prev => [...prev, { ...speakerForm, id: Date.now() }]);
+      setSpeakerForm({
+        name: "",
+        link: "",
+        realName: "",
+        workPlace: "",
+        picture: null
+      });
+      setShowSpeakerForm(false);
+    }
   };
 
   return (
@@ -59,6 +136,8 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select start date & time"
+                  value={endRegistration.from}
+                  onChange={(e) => handleEndRegistrationChange('from', e.target.value)}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -67,6 +146,8 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select end date & time"
+                  value={endRegistration.to}
+                  onChange={(e) => handleEndRegistrationChange('to', e.target.value)}
                 />
               </div>
             </div>
@@ -82,11 +163,17 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
+                  value={openingCeremony.dateTime}
+                  onChange={(e) => handleOpeningCeremonyChange('dateTime', e.target.value)}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Status</Label>
-                <select className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3">
+                <select 
+                  className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3"
+                  value={openingCeremony.status}
+                  onChange={(e) => handleOpeningCeremonyChange('status', e.target.value)}
+                >
                   <option value="">Select status</option>
                   <option value="upcoming">Upcoming</option>
                   <option value="live">Live</option>
@@ -106,6 +193,8 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select start date & time"
+                  value={submission.from}
+                  onChange={(e) => handleSubmissionChange('from', e.target.value)}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -114,11 +203,17 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select end date & time"
+                  value={submission.to}
+                  onChange={(e) => handleSubmissionChange('to', e.target.value)}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Status</Label>
-                <select className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3">
+                <select 
+                  className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3"
+                  value={submission.status}
+                  onChange={(e) => handleSubmissionChange('status', e.target.value)}
+                >
                   <option value="">Select status</option>
                   <option value="upcoming">Upcoming</option>
                   <option value="live">Live</option>
@@ -138,6 +233,8 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
+                  value={rewardAnnouncement.dateTime}
+                  onChange={(e) => handleRewardAnnouncementChange(e.target.value)}
                 />
               </div>
             </div>
@@ -153,12 +250,51 @@ const Schdule = () => {
                   type="datetime-local" 
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
+                  value={awardCeremony.dateTime}
+                  onChange={(e) => handleAwardCeremonyChange(e.target.value)}
                 />
               </div>
             </div>
           </div>
         </div>
         <hr className='mt-5 border border-[#252525]'/>
+
+        {/* Added Speakers List */}
+        {speakers.length > 0 && (
+          <div className="mt-8">
+            <Label className="text-white text-lg mb-4 block">Added Speakers</Label>
+            <div className="space-y-4">
+              {speakers.map((speaker, index) => (
+                <Card key={speaker.id} className="bg-[#0f1011] border border-[#242425]">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-4">
+                      {speaker.picture && (
+                        <img 
+                          src={speaker.picture} 
+                          alt={speaker.realName} 
+                          className="w-12 h-12 rounded-lg object-cover"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <h4 className="text-white font-medium">{speaker.realName}</h4>
+                        <p className="text-gray-400 text-sm">{speaker.workPlace}</p>
+                        <p className="text-blue-400 text-sm">@{speaker.name}</p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSpeakers(speakers.filter(s => s.id !== speaker.id))}
+                        className="bg-transparent border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Speaker Section */}
         <div className="mt-8">
@@ -298,6 +434,12 @@ const Schdule = () => {
               )}
             </CardContent>
           </Card>
+        </div>
+
+        {/* Data Status */}
+        <div className="mt-8 text-center text-gray-400">
+          <p>Schedule data is automatically collected in scheduleData object</p>
+          <p className="text-xs mt-2">Check console to see current data</p>
         </div>
     </div>
   )
