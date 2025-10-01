@@ -11,7 +11,18 @@ import { useMyContext } from "../../context/createHackContext";
 
 export const CreateHackPage = () => {
   const [activeSection, setActiveSection] = useState("overview");
-  const {createHackData,setCreateHackData}=useMyContext()
+
+
+
+  const {
+    createHackData,
+    setCreateHackData,
+    handleSubmit,
+    isSubmitting,
+    submitResult,
+  } = useMyContext();
+
+    console.log(createHackData);
 
   const navigationItems = [
     {
@@ -30,19 +41,24 @@ export const CreateHackPage = () => {
       icon: "/figmaAssets/frame.svg",
     },
     {
-      id : "schdule",
-      label : "Schdule",
-      icon : "/figmaAssets/frame.svg"
-    }
+      id: "schdule",
+      label: "Schdule",
+      icon: "/figmaAssets/frame.svg",
+    },
   ];
 
   // Get current section index
-  const currentSectionIndex = navigationItems.findIndex(item => item.id === activeSection);
-  
+  const currentSectionIndex = navigationItems.findIndex(
+    (item) => item.id === activeSection
+  );
+
   // Navigation functions
   const goToNext = () => {
     if (currentSectionIndex < navigationItems.length - 1) {
       setActiveSection(navigationItems[currentSectionIndex + 1].id);
+    } else if (isLastSection) {
+      // Handle submit when on last section
+      handleSubmit();
     }
   };
 
@@ -63,9 +79,9 @@ export const CreateHackPage = () => {
       case "prizes":
         return <Prizes />;
       case "judges":
-        return <Judges/>;
+        return <Judges />;
       case "schdule":
-        return <Schdule />
+        return <Schdule />;
       default:
         return <ElementCreate />;
     }
@@ -96,16 +112,16 @@ export const CreateHackPage = () => {
                 {active && (
                   <div className="absolute inset-0 w-52 h-[41px] bg-[#0092ff] rounded-md opacity-20" />
                 )}
-                
-                <div 
+
+                <div
                   onClick={() => setActiveSection(item.id)}
                   className="flex items-center gap-2 p-2 cursor-pointer"
                 >
                   <img className="w-4 h-4" alt="Frame" src={item.icon} />
                   <span
-                    className={`text-sm font-${active ? "semibold" : "normal"} ${
-                      active ? "text-[#0092ff]" : "text-[#949fa8]"
-                    }`}
+                    className={`text-sm font-${
+                      active ? "semibold" : "normal"
+                    } ${active ? "text-[#0092ff]" : "text-[#949fa8]"}`}
                   >
                     {item.label}
                   </span>
@@ -149,32 +165,68 @@ export const CreateHackPage = () => {
       {/* Main Content Area */}
       <div className=" pt-20 p-8 bg-[#1b1a1d] min-h-screen">
         {renderCurrentSection()}
-        
+
         {/* Navigation Buttons */}
         <div className="mt-8 flex justify-center gap-40">
-          <Button 
+          <Button
             onClick={goToPrevious}
             disabled={isFirstSection}
             className={`px-8 py-3 ${
-              isFirstSection 
-                ? 'bg-blue-500 text-white cursor-not-allowed' 
-                : 'bg-[#0092ff] text-white hover:bg-[#0092ff]/90'
+              isFirstSection
+                ? "bg-blue-500 text-white cursor-not-allowed"
+                : "bg-[#0092ff] text-white hover:bg-[#0092ff]/90"
             }`}
           >
             Previous
           </Button>
-          <Button 
+          <Button
             onClick={goToNext}
-            disabled={isLastSection}
+            disabled={isLastSection && isSubmitting}
             className={`px-8 py-3 ${
-              isLastSection 
-                ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                : 'bg-[#0092ff] text-white hover:bg-[#0092ff]/90'
+              isLastSection && isSubmitting
+                ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                : "bg-[#0092ff] text-white hover:bg-[#0092ff]/90"
             }`}
           >
-            {isLastSection ? 'Create Hackathon' : 'Next'}
+            {isLastSection
+              ? isSubmitting
+                ? "Creating..."
+                : "Create Hackathon"
+              : "Next"}
           </Button>
         </div>
+
+        {/* Submit Result Display */}
+        {submitResult && (
+          <div
+            className={`mt-6 p-4 rounded-lg text-center ${
+              submitResult.success
+                ? "bg-green-100 text-green-700 border border-green-300"
+                : "bg-red-100 text-red-700 border border-red-300"
+            }`}
+          >
+            {submitResult.success ? (
+              <div>
+                <p className="font-semibold">
+                  ✅ Hackathon created successfully!
+                </p>
+                <p className="mt-2">
+                  IPFS URL:
+                  <a
+                    href={submitResult.metadataUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline ml-1"
+                  >
+                    View on IPFS
+                  </a>
+                </p>
+              </div>
+            ) : (
+              <p>❌ Error: {submitResult.message}</p>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

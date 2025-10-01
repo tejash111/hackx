@@ -41,8 +41,7 @@ const Schdule = () => {
   // Complete schedule data object
   const {createHackData,setCreateHackData}=useMyContext()
 
-  console.log(createHackData);
-  
+
   useEffect(() => {
     const updatedData = {
       endRegistration,
@@ -58,7 +57,7 @@ const Schdule = () => {
       ...prev,
       ...updatedData
     }))
-   
+
   }, [endRegistration, openingCeremony, submission, rewardAnnouncement, awardCeremony, speakers, showSpeakerForm]);
 
   // Handler functions
@@ -132,8 +131,8 @@ const Schdule = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">From</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select start date & time"
                   value={endRegistration.from}
@@ -142,8 +141,8 @@ const Schdule = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">To</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select end date & time"
                   value={endRegistration.to}
@@ -159,8 +158,8 @@ const Schdule = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Date & Time</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
                   value={openingCeremony.dateTime}
@@ -169,7 +168,7 @@ const Schdule = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Status</Label>
-                <select 
+                <select
                   className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3"
                   value={openingCeremony.status}
                   onChange={(e) => handleOpeningCeremonyChange('status', e.target.value)}
@@ -189,8 +188,8 @@ const Schdule = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">From</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select start date & time"
                   value={submission.from}
@@ -199,8 +198,8 @@ const Schdule = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">To</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select end date & time"
                   value={submission.to}
@@ -209,7 +208,7 @@ const Schdule = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Status</Label>
-                <select 
+                <select
                   className="border-[#252525] bg-[#0E1010] w-32 text-[#F3FEFF] h-12 rounded-md px-3"
                   value={submission.status}
                   onChange={(e) => handleSubmissionChange('status', e.target.value)}
@@ -229,8 +228,8 @@ const Schdule = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Date & Time</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
                   value={rewardAnnouncement.dateTime}
@@ -246,8 +245,8 @@ const Schdule = () => {
             <div className="flex gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-gray-400 text-sm">Date & Time</Label>
-                <Input 
-                  type="datetime-local" 
+                <Input
+                  type="datetime-local"
                   className="border-[#252525] bg-[#0E1010] w-48 text-[#F3FEFF] h-12"
                   placeholder="Select date & time"
                   value={awardCeremony.dateTime}
@@ -269,9 +268,9 @@ const Schdule = () => {
                   <CardContent className="p-4">
                     <div className="flex items-center gap-4">
                       {speaker.picture && (
-                        <img 
-                          src={speaker.picture} 
-                          alt={speaker.realName} 
+                        <img
+                          src={speaker.picture}
+                          alt={speaker.realName}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
                       )}
@@ -301,9 +300,9 @@ const Schdule = () => {
           <Card className="mb-6 bg-[#0f1011] border border-[#242425]">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-6">
-                <input 
-                  type="checkbox" 
-                  checked={showSpeakerForm} 
+                <input
+                  type="checkbox"
+                  checked={showSpeakerForm}
                   onChange={(e) => setShowSpeakerForm(e.target.checked)}
                   className="w-4 h-4 text-[#0092ff] bg-gray-100 border-gray-300 rounded focus:ring-[#0092ff] focus:ring-2"
                 />

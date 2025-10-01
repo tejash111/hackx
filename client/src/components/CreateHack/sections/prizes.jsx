@@ -21,9 +21,8 @@ import { useMyContext } from "../../../context/createHackContext";
 export const Prizes = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
    const {createHackData,setCreateHackData}=useMyContext()
-   console.log(createHackData);
-   
-  
+ 
+
   // Prize cohorts state - each cohort has its own fields
   const [prizeCohorts, setPrizeCohorts] = useState([{
     id: 1,
@@ -41,7 +40,7 @@ export const Prizes = () => {
     maxVotePerJudge: ""
   }]);
 
- 
+
 
   // Update prizes data whenever any field changes
   useEffect(() => {
@@ -54,7 +53,7 @@ export const Prizes = () => {
       ...prev,
       ...updatedData
     }))
-   
+
   }, [prizeCohorts]);
 
   // Handler to update a specific cohort field
@@ -104,8 +103,8 @@ export const Prizes = () => {
 
   return (
     <div className="bg-[#1b1a1d] w-full maxx-w-[1728px] min-h-screen relative">
-      
-      
+
+
       {/* Main content */}
       <div className="ml-[250px] mt-20 p-8">
         {prizeCohorts.map((cohort, cohortIndex) => (
@@ -134,7 +133,7 @@ export const Prizes = () => {
                 )}
                 <span className="text-sm font-normal">details</span>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent>
                 <div className="space-y-6 mb-6">
                   {/* Number of winners and Prize amount */}
@@ -156,7 +155,7 @@ export const Prizes = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div className="flex-1">
                       <Label className="text-white text-base font-normal mb-3 block">
                         Prize amount for each winner
@@ -201,7 +200,7 @@ export const Prizes = () => {
                             data-testid={`criteria-name-${cohortIndex}-${criteriaIndex}`}
                           />
                         </div>
-                        
+
                         <div className="flex-1">
                           <Label className="text-white text-base font-normal mb-3 block">
                             Number of points
@@ -258,7 +257,7 @@ export const Prizes = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div className="flex-1">
                       <Label className="text-white text-base font-normal mb-3 block">
                         Max vote per judge

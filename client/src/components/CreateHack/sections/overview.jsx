@@ -31,9 +31,7 @@ export const ElementCreate = () => {
 
   // Create hackathon data object
    const {createHackData,setCreateHackData}=useMyContext()
-   console.log(createHackData);
    
-
   // Update hackathon data whenever any field changes
   useEffect(() => {
     const updatedData = {
