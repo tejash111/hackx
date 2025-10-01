@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 export const JudgeDashboardProjects = () => {
   const navigationItems = [
@@ -119,6 +120,8 @@ export const JudgeDashboardProjects = () => {
       tags: ["DeFi", "Infra"],
     },
   ];
+
+  const navigate=useNavigate()
 
   return (
     <div className="bg-[#1b1a1d] w-full min-h-screen relative flex">
@@ -316,13 +319,13 @@ export const JudgeDashboardProjects = () => {
                       </div>
 
                       {/* Review Button */}
-                      <Link href={`/project/${index + 1}`}>
-                        <Button className="w-full h-[46px] bg-[#0092ff] rounded-lg hover:bg-[#0092ff]/90">
+                      
+                        <Button onClick={()=>navigate(`/judge-project/${index + 1}`)} className="w-full h-[46px] bg-[#0092ff] rounded-lg hover:bg-[#0092ff]/90">
                           <span className="[font-family:'Inter',Helvetica] font-bold text-white text-sm tracking-[0] leading-5">
                             Review Project
                           </span>
                         </Button>
-                      </Link>
+                    
                     </div>
                   </CardContent>
                 </Card>

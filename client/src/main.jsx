@@ -12,6 +12,8 @@ import { ElementProjectLogin } from './components/auth/projectLogin.jsx'
 import { JudgeRegister } from './components/auth/judgeRegister.jsx'
 import { CreateHackthonContext } from './context/createHackContext.jsx'
 import { ElementJudgeDashboard } from './components/judge/section/JudgeDashboard.jsx'
+import { JudgeDashboardProjects } from './components/judge/section/DashboardProject.jsx'
+import { ProjectOverview } from './components/judge/section/projectoverview.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <ElementAllHackatons /> },
@@ -22,9 +24,10 @@ const router = createBrowserRouter([
    {path: "/dashboard" , element : <ElementDashboard/>},
   {path: "/login" , element : <ElementProjectLogin/>},
   {path: "/judge-register" , element : <JudgeRegister/>},
-  { path="/" component={ElementJudgeDashboard}}
-  {path="/projects" component={JudgeDashboardProjects}}
-  { path="/project/:id" component={ProjectOverview} }
+    {path: "/judge-dashboard" , element : <ElementJudgeDashboard/>},
+      {path: "/judge-project" , element : <JudgeDashboardProjects/>},
+  {path: "/judge-project/:slug" , element : <ProjectOverview/>},
+  
 ])
 
 createRoot(document.getElementById('root')).render(

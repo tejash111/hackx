@@ -1,13 +1,7 @@
 import { XIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FundraisingStatusSection } from "./sections/FundraisingStatusSection";
-import { PitchVideoSection } from "./sections/PitchVideoSection";
-import { ProgressStatusSection } from "./sections/ProgressStatusSection";
-import { ProjectDescriptionSection } from "./sections/ProjectDescriptionSection";
-import { ProjectDetailsSection } from "./sections/ProjectDetailsSection";
-import { ProjectLogoSection } from "./sections/ProjectLogoSection";
-import { SectorSelectionSection } from "./sections/SectorSelectionSection";
+import { Overview } from "./sections/overview";
 import { TechStackSection } from "./sections/TechStackSection";
 import { HackathonSubmissionSection } from "./sections/HackathonSubmissionSection";
 
@@ -41,13 +35,8 @@ export const ElementCreateProject = () => {
       default:
         return (
           <div className="flex flex-col gap-6">
-            <SectorSelectionSection />
-            <ProgressStatusSection />
-            <FundraisingStatusSection />
-            <PitchVideoSection />
-            <ProjectDetailsSection />
-            <ProjectDescriptionSection />
-            <ProjectLogoSection />
+            <Overview />
+        
           </div>
         );
     }

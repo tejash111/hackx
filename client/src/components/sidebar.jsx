@@ -8,6 +8,15 @@ const sidebarItems = [
   },
 ];
 
+const judge = [
+  {
+    icon: "/figmaAssets/frame.svg",
+    label: "Judge Dashboard",
+    link: "/judge-dashboard"
+  },
+];
+
+
 const certificationItems = [
   {
     icon: "/figmaAssets/frame.svg",
@@ -108,6 +117,28 @@ const Sidebar = () => {
 
         {/* Navigation */}
         <nav className="flex-1 px-0">
+
+            <div className="px-0 py-6">
+            {judge.map((item, index) => (
+              <Link key={index} to={item.link} className="flex items-center gap-2 px-6 py-0 hover:bg-[#0092ff]/10 transition-colors cursor-pointer">
+                <img className="w-4 h-4" alt="Frame" src={item.icon} />
+                <span
+                  className={`[font-family:'Inter',Helvetica] ${shouldBeBold(item.link) ? "font-semibold" : "font-normal"} text-sm tracking-[0] leading-[normal] ${getTextColor(item.link, "text-[#949fa8]")}`}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            ))}
+          </div>
+
+           <div className="px-4">
+            <img
+              className="w-[184px] h-px"
+              alt="Line"
+              src="/figmaAssets/line-7.svg"
+            />
+          </div>
+
           {/* Quest Section */}
           <div className="px-0 py-6">
             {sidebarItems.map((item, index) => (

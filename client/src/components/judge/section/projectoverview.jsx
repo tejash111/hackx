@@ -7,11 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "wouter";
 
-export const ProjectOverview = (): JSX.Element => {
-  const [activeVideo, setActiveVideo] = useState<"demo" | "pitch">("demo");
-  const [activeTab, setActiveTab] = useState<"overview" | "hackathon" | "judging">("overview");
+export const ProjectOverview = () => {
+  const [activeVideo, setActiveVideo] = useState("demo");
+  const [activeTab, setActiveTab] = useState("overview");
   const [selectedCohort, setSelectedCohort] = useState("Tech Fairness Exploration Awards");
-  const [scores, setScores] = useState<{ [key: string]: string }>({});
+  const [scores, setScores] = useState({});
 
   const navigationItems = [
     {
@@ -169,7 +169,7 @@ export const ProjectOverview = (): JSX.Element => {
     },
   ];
 
-  const handleScoreChange = (criteriaId: string, value: string) => {
+  const handleScoreChange = (criteriaId, value) => {
     setScores({ ...scores, [criteriaId]: value });
   };
 
@@ -308,7 +308,7 @@ export const ProjectOverview = (): JSX.Element => {
             </Link>
 
             {/* Tabs */}
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)} className="mb-6">
+            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)} className="mb-6">
               <TabsList className="bg-transparent border-none p-0 h-auto gap-2">
                 <TabsTrigger
                   value="overview"

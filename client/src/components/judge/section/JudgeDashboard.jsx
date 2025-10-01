@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "wouter";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "../../sidebar";
 
 export const ElementJudgeDashboard = () => {
+  const navigate=useNavigate()
   const navigationItems = [
     {
       icon: "/figmaAssets/frame-5.svg",
@@ -97,114 +100,14 @@ export const ElementJudgeDashboard = () => {
 
   return (
     <div className="bg-[#1b1a1d] w-full min-w-[1728px] min-h-[1117px] relative">
-      <div className="absolute top-[76px] left-1 w-52 h-[41px] bg-[#0092ff] rounded-md opacity-20" />
+    
+    <Sidebar/>
+      
 
-      <Separator
-        orientation="vertical"
-        className="absolute h-full top-0 left-[216px] w-px bg-gray-600"
-      />
+  
 
-      <img
-        className="absolute top-6 left-6 w-12 h-8"
-        alt="Logo container"
-        src="/figmaAssets/logo-container.png"
-      />
+      
 
-      <nav className="flex flex-col w-[184px] items-start gap-6 absolute top-[88px] left-4">
-        <div className="flex-col items-start justify-center gap-6 flex relative self-stretch w-full flex-[0_0_auto]">
-          {navigationItems.map((item, index) => (
-            <div
-              key={index}
-              className="items-center gap-2 flex relative self-stretch w-full flex-[0_0_auto]"
-            >
-              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                <img className="relative w-4 h-4" alt="Frame" src={item.icon} />
-                <div
-                  className={`relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold ${item.textColor} text-sm tracking-[0] leading-[normal]`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <Separator className="relative self-stretch w-full h-px bg-gray-600" />
-
-        <div className="flex-col items-start justify-center gap-6 flex relative self-stretch w-full flex-[0_0_auto]">
-          {certificationItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]"
-            >
-              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                <img className="relative w-4 h-4" alt="Frame" src={item.icon} />
-                <div
-                  className={`relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal ${item.textColor} text-sm tracking-[0] leading-[normal]`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <Separator className="relative self-stretch w-full h-px bg-gray-600" />
-
-        <div className="flex flex-col items-start gap-4 w-full flex-[0_0_auto] relative self-stretch">
-          {hackathonItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]"
-            >
-              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                <img className="relative w-4 h-4" alt="Frame" src={item.icon} />
-                <div
-                  className={`relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal ${item.textColor} text-sm tracking-[0] leading-[normal]`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <Separator className="relative self-stretch w-full h-px bg-gray-600" />
-
-        <div className="flex flex-col items-start gap-4 w-full flex-[0_0_auto] relative self-stretch">
-          {communityItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex gap-2 self-stretch w-full items-start relative flex-[0_0_auto]"
-            >
-              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                <img className="relative w-4 h-4" alt="Frame" src={item.icon} />
-                <div
-                  className={`relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal ${item.textColor} text-sm tracking-[0] leading-[normal]`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </nav>
-
-      <div className="absolute top-4 left-[1664px] w-[50px] h-12">
-        <Avatar className="w-12 h-12 bg-[#472915]">
-          <AvatarFallback className="bg-[#472915] text-white text-base [font-family:'Inter',Helvetica] font-normal">
-            C
-          </AvatarFallback>
-        </Avatar>
-      </div>
-
-      <img
-        className="absolute top-7 left-[1616px] w-6 h-6"
-        alt="Frame"
-        src="/figmaAssets/frame-7.svg"
-      />
-
-      <Separator className="absolute top-[79px] left-[216px] w-[1512px] h-px bg-gray-600" />
 
       <h1 className="absolute top-[136px] left-[422px] [font-family:'Inter',Helvetica] font-semibold text-white text-2xl tracking-[0] leading-[18px] whitespace-nowrap">
         Hackathons to judge
@@ -249,9 +152,9 @@ export const ElementJudgeDashboard = () => {
               ))}
             </div>
 
-            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-              <Link href="/projects">
-                <Button className="flex w-[195px] h-[46px] items-center justify-center gap-2 px-4 py-5 relative bg-[#0092ff] rounded-lg hover:bg-[#0092ff]/90 h-auto">
+            <div   className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+              
+                <Button onClick={()=>navigate("/judge-project")} className="flex w-[195px] h-[46px] items-center justify-center gap-2 px-4 py-5 relative bg-[#0092ff] rounded-lg hover:bg-[#0092ff]/90 h-auto">
                   <span className="relative flex items-center justify-center w-fit mt-[-8.00px] mb-[-6.00px] [font-family:'Inter',Helvetica] font-bold text-white text-[13.7px] tracking-[0] leading-5 whitespace-nowrap">
                     Go to judging
                   </span>
@@ -261,7 +164,7 @@ export const ElementJudgeDashboard = () => {
                     src="/figmaAssets/icon.svg"
                   />
                 </Button>
-              </Link>
+              
 
               <Button
                 variant="outline"
