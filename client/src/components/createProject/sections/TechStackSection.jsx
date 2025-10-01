@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useMyContext } from "../../../context/createHackContext";
 
 export const TechStackSection = () => {
   // Unified form state object
@@ -16,7 +17,18 @@ export const TechStackSection = () => {
     techStackTags: []
   });
 
-  const [customTag, setCustomTag] = useState("");
+
+  const {createProjectData,setCreateProjectData}=useMyContext()
+    
+    const [customTag, setCustomTag] = useState("");
+  
+    // Update formData whenever any field changes
+    useEffect(() => {
+      setCreateProjectData((prev)=>({
+        ...prev,
+        ...formData
+      }))
+    }, [formData]);
 
   // Update formData whenever any field changes
   useEffect(() => {

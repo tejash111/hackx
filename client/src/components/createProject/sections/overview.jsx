@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { LinkIcon, UploadIcon } from "lucide-react";
+import { useMyContext } from "../../../context/createHackContext";
 
 export const Overview = () => {
   // Unified form state object
@@ -21,13 +22,16 @@ export const Overview = () => {
     fullDescription: ""
   });
 
-
+const {createProjectData,setCreateProjectData}=useMyContext()
   
   const [customTag, setCustomTag] = useState("");
 
   // Update formData whenever any field changes
   useEffect(() => {
-    console.log("Overview Form Data Updated:", formData);
+    setCreateProjectData((prev)=>({
+      ...prev,
+      ...formData
+    }))
   }, [formData]);
 
   const buttonData = [

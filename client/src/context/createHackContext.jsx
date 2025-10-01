@@ -6,6 +6,7 @@ export const CreateHackthonContext = ({ children }) => {
   const [createHackData, setCreateHackData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState(null);
+  const [createProjectData,setCreateProjectData]=useState({})
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -130,6 +131,7 @@ export const CreateHackthonContext = ({ children }) => {
         handleSubmit,
         isSubmitting,
         submitResult,
+        createProjectData,setCreateProjectData
       }}
     >
       {children}

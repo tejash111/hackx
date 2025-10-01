@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Overview } from "./sections/overview";
 import { TechStackSection } from "./sections/TechStackSection";
 import { HackathonSubmissionSection } from "./sections/HackathonSubmissionSection";
+import { useMyContext } from "../../context/createHackContext";
 
 const navigationItems = [
   {
@@ -25,6 +26,10 @@ const navigationItems = [
 
 export const ElementCreateProject = () => {
   const [activeSection, setActiveSection] = useState("overview");
+
+  const {createProjectData,setCreateProjectData}=useMyContext()
+  console.log(createProjectData);
+  
 
   const renderContent = () => {
     switch (activeSection) {
