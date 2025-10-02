@@ -8,82 +8,114 @@ const hackathonsData = getUpcomingHackathons();
 
 export const UpcomingHackathonsSection = () => {
   return (
-    <section className="flex flex-col w-full items-start gap-4 relative">
+    <section className="flex flex-col w-full items-start gap-6 relative">
       {hackathonsData.map((hackathon, index) => (
         <Link key={index} to={`/hackathon/${hackathon.id}`} className="block w-full">
-          <Card
-            className="flex items-center justify-between p-4 w-full border border-[#2b3640] rounded-2xl bg-transparent hover:bg-[#242425] transition-colors cursor-pointer"
-          >
-          <CardContent className="flex flex-col items-start gap-8 p-0 flex-1 max-w-[554px]">
-            <div className="flex flex-col items-start gap-2 w-full">
-              <div className="flex items-center gap-2">
-                <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal] whitespace-nowrap">
-                  {hackathon.title}
-                </h3>
-                <Badge
-                  className={`${hackathon.statusColor} text-white text-xs font-semibold px-2.5 py-1 rounded-2xl border-0`}
-                >
-                  {hackathon.status}
-                </Badge>
+          <Card className="relative w-full border border-[#2b3640] rounded-2xl bg-transparent hover:bg-[#242629] transition-colors cursor-pointer overflow-hidden">
+            <CardContent className="flex items-start justify-between p-6 gap-6">
+              {/* Left Content */}
+              <div className="flex-1 flex flex-col gap-4">
+                {/* Header with Title and Status */}
+                <div className="flex items-center gap-3">
+                  <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white text-xl tracking-[0] leading-[normal]">
+                    {hackathon.title}
+                  </h3>
+                  <Badge className={`${hackathon.statusColor} text-white text-xs font-semibold px-3 py-1 rounded-full border-0`}>
+                    {hackathon.status}
+                  </Badge>
+                </div>
+
+                {/* Description */}
+                <p className="text-[#9ca3af] [font-family:'Inter',Helvetica] font-normal text-sm tracking-[0] leading-6 max-w-[500px]">
+                  {hackathon.description}
+                </p>
+
+                {/* Information Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[#6b7280] [font-family:'Inter',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
+                      {hackathon.registrationLabel}
+                    </span>
+                    <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
+                      {hackathon.registrationValue}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[#6b7280] [font-family:'Inter',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
+                      Tech stack
+                    </span>
+                    <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
+                      {hackathon.techStack}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[#6b7280] [font-family:'Inter',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
+                      Level
+                    </span>
+                    <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
+                      {hackathon.level}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[#6b7280] [font-family:'Inter',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
+                      Total prize
+                    </span>
+                    <span className="[font-family:'Inter',Helvetica] font-bold text-white text-lg tracking-[0] leading-[normal]">
+                      ${hackathon.totalPrize.replace('.00 USD', '')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Status Badges */}
+                <div className="flex items-center gap-2 mt-2">
+                  <Badge className="bg-[#374151] text-white text-xs font-medium px-3 py-1 rounded-full border-0">
+                    Online
+                  </Badge>
+                  <Badge className="bg-[#374151] text-white text-xs font-medium px-3 py-1 rounded-full border-0">
+                    {hackathon.participants}
+                  </Badge>
+                </div>
               </div>
-              <p className="opacity-60 [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] h-10">
-                {hackathon.description}
-              </p>
-            </div>
 
-            <div className="flex items-center gap-6 w-full">
-              <div className="flex flex-col h-[38px] items-start gap-1.5">
-                <span className="opacity-60 [font-family:'Inter',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
-                  {hackathon.registrationLabel}
-                </span>
-                <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
-                  {hackathon.registrationValue}
-                </span>
+              {/* Right Side - Hackathon Image/Logo */}
+              <div className="flex-shrink-0">
+                <div className="w-[280px] h-[160px] rounded-xl overflow-hidden bg-gradient-to-br from-[#0092ff] to-[#6366f1] flex items-center justify-center">
+                  {hackathon.image ? (
+                    <img
+                      className="w-full h-full object-cover"
+                      alt={`${hackathon.title} banner`}
+                      src={hackathon.image}
+                    />
+                  ) : (
+                    <div className="text-center text-white p-4">
+                      <div className="text-2xl font-bold mb-2">
+                        ChainSpark
+                      </div>
+                      <div className="text-lg font-medium">
+                        HACKATHON
+                      </div>
+                      <div className="text-sm text-orange-300 mt-1">
+                        DeFi Builders Edition
+                      </div>
+                      <div className="text-xs mt-2">
+                        Smart Contracts<br />
+                        & Financial Inclusion
+                      </div>
+                      <div className="text-sm font-bold mt-3">
+                        PRIZE<br />
+                        $38,000
+                      </div>
+                      <div className="text-xs mt-1">
+                        OCTOBER 12-16, 2024
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-
-              <div className="flex flex-col h-[38px] items-start gap-1.5">
-                <span className="opacity-60 [font-family:'Inter',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
-                  Tech stack
-                </span>
-                <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
-                  {hackathon.techStack}
-                </span>
-              </div>
-
-              <div className="flex flex-col h-[38px] items-start gap-1.5">
-                <span className="opacity-60 [font-family:'Inter',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
-                  Level
-                </span>
-                <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
-                  {hackathon.level}
-                </span>
-              </div>
-
-              <div className="flex flex-col h-[38px] items-start gap-1.5">
-                <span className="opacity-60 [font-family:'Inter',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
-                  Total prize
-                </span>
-                <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[normal]">
-                  {hackathon.totalPrize}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Badge className="bg-[#ffffff4c] text-white text-xs font-semibold px-2.5 py-1 rounded-2xl border-0">
-                Online
-              </Badge>
-              <Badge className="bg-[#ffffff4c] text-white text-xs font-semibold px-2.5 py-1 rounded-2xl border-0">
-                {hackathon.participants}
-              </Badge>
-            </div>
-          </CardContent>
-
-          <img
-            className="w-[362px] h-[196px] object-cover"
-            alt="Hackathon image"
-            src={hackathon.image}
-          />
+            </CardContent>
           </Card>
         </Link>
       ))}

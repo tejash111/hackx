@@ -4,9 +4,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PastHackathonsSection } from "./section/PastHackathonsSection";
-import { RegistrationInfoSection } from "./section/RegistrationInfoSection";
 import { UpcomingHackathonsSection } from "./section/UpcomingHackathonsSection";
 import Sidebar from "../sidebar";
+import { Input } from "../ui/input";
 
 export const ElementAllHackatons = () => {
   const navigationItems = [
@@ -83,12 +83,8 @@ export const ElementAllHackatons = () => {
         {/* Header */}
         <header className="h-[79px] border-b border-[#242425] flex items-center justify-between px-4">
           {/* Search Bar */}
-          <div className="flex items-center gap-2 px-6 py-5 bg-[#16161b] rounded-[10px] border border-[#242425] w-[1040px] h-12">
-            <SearchIcon className="w-5 h-5 text-[#949fa8]" />
-            <span className="[font-family:'Inter',Helvetica] font-normal text-[#949fa8] text-base">
-              Search for researches and audits on HackX
-            </span>
-          </div>
+         
+          <Input placeholder={"Search for researches and audits on HackX"} className={"w-[1040px] h-12 px-6 py-5 bg-[#16161b] border-[#242425]"} />
 
           {/* Header Right */}
           <div className="flex items-center gap-4">
@@ -203,8 +199,7 @@ export const ElementAllHackatons = () => {
             ))}
           </div>
 
-          {/* Registration Info Section */}
-          <RegistrationInfoSection />
+        
 
           {/* Upcoming Hackathons Section */}
           <UpcomingHackathonsSection />

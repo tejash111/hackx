@@ -218,105 +218,179 @@ export const HackathonDetail = () => {
             {/* Tab Content */}
             {activeTab === "Overview" && (
               <div className="space-y-8">
-                <h1 className="text-white text-3xl font-bold mb-2" data-testid="hackathon-title">
-              {hackathon.title}
-            </h1>
-            
-            {/* Subtitle */}
-            <h2 className="text-white text-xl mb-6" data-testid="hackathon-subtitle">
-              Calling All Builders, Dreamers, and Rule-Breakers!
-            </h2>
+                {/* Large Banner Section */}
+                <div className="relative w-full h-[400px] bg-gradient-to-br from-[#0f1729] via-[#1a2332] to-[#0f1729] rounded-2xl overflow-hidden">
+                  {/* Background Pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-0 left-0 w-full h-full bg-[url('/figmaAssets/pattern.svg')] bg-repeat"></div>
+                  </div>
+                  
+                  {/* Main Content */}
+                  <div className="relative z-10 flex items-center justify-between h-full px-12">
+                    {/* Left Side - Hackathon Info */}
+                    <div className="flex-1 space-y-6">
+                      <div>
+                        <h1 className="text-white text-4xl font-bold mb-2">{hackathon.title}</h1>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge className="bg-[#4ade80] text-black text-sm font-semibold px-3 py-1 rounded-full">
+                            {hackathon.status}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <p className="text-[#9ca3af] text-lg leading-relaxed max-w-[600px]">
+                        {hackathon.description}
+                      </p>
+                      
+                      {/* Key Information Grid */}
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                        <div>
+                          <div className="text-[#6b7280] text-sm mb-1">Registration close</div>
+                          <div className="text-white font-medium">Registration 12 days left</div>
+                        </div>
+                        <div>
+                          <div className="text-[#6b7280] text-sm mb-1">Tech stack</div>
+                          <div className="text-white font-medium">All tech stack</div>
+                        </div>
+                        <div>
+                          <div className="text-[#6b7280] text-sm mb-1">Level</div>
+                          <div className="text-white font-medium">All levels accepted</div>
+                        </div>
+                        <div>
+                          <div className="text-[#6b7280] text-sm mb-1">Total prize</div>
+                          <div className="text-white font-bold text-xl">50,000.00 USD</div>
+                        </div>
+                      </div>
+                      
+                      {/* Status Badges */}
+                      <div className="flex items-center gap-3 mt-6">
+                        <Badge className="bg-[#374151] text-white text-sm font-medium px-4 py-2 rounded-full">
+                          Online
+                        </Badge>
+                        <Badge className="bg-[#374151] text-white text-sm font-medium px-4 py-2 rounded-full">
+                          405 Participants
+                        </Badge>
+                      </div>
+                    </div>
+                    
+                    {/* Right Side - ChainSpark Banner */}
+                    <div className="flex-shrink-0 ml-12">
+                      <div className="w-[350px] h-[280px] bg-gradient-to-br from-[#0092ff] via-[#1e40af] to-[#6366f1] rounded-2xl flex flex-col items-center justify-center text-center text-white p-8 shadow-2xl">
+                        {/* ChainSpark Logo */}
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                            <span className="text-blue-600 font-bold text-lg">⚡</span>
+                          </div>
+                          <span className="text-xl font-bold">ChainSpark</span>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <h2 className="text-3xl font-bold">HACKATHON</h2>
+                          <div className="text-orange-300 text-lg font-medium">DeFi Builders Edition</div>
+                          
+                          <div className="text-sm space-y-1 my-4">
+                            <div>Smart Contracts</div>
+                            <div>& Financial Inclusion</div>
+                          </div>
+                          
+                          <div className="bg-black/20 rounded-lg p-3 mt-4">
+                            <div className="text-xs text-gray-300 mb-1">PRIZE</div>
+                            <div className="text-2xl font-bold">$38,000</div>
+                          </div>
+                          
+                          <div className="text-sm mt-3">OCTOBER 12-16, 2024</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Calling All Builders Section */}
+                <div className="bg-transparent rounded-2xl p-8">
+                  <h2 className="text-white text-2xl font-medium mb-4">ChainSpark Hackathon</h2>
+                  <h2 className="text-white text-2xl font-medium mb-4">
+                    Calling All Builders, Dreamers, and Rule-Breakers!
+                  </h2>
+                  <div className="space-y-4">
+                    <p className="text-white text-base leading-relaxed">
+                      The crypto world is a wild ride—full of chaos, opportunity, and endless what-ifs. But one thing's 
+                      for sure: innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers.
+                    </p>
+                    <p className="text-white text-base leading-relaxed">
+                      This isn't just another hackathon. It's a battlefield for fairness, a playground for disruptors, 
+                      and a launchpad for the next wave of decentralized innovation. Whether you're an AI wizard
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Prize Pool Section */}
+                <div className="bg-transparent border-[#2b3640] border rounded-2xl p-8 grid grid-cols-4">
+                  <div className="flex   items-center justify-between mb-8">
+                    
+                    <div className="m-2">
+                      <div className="">
+                     
+                      <div className="text-white text-4xl font-bold m-2">50,000 USD</div>
+                      <div className="text-[#6b7280] text-sm text-center">Available in Prizes</div>
+                    </div>
+                    <Button className="bg-blue-600 mt-4 hover:bg-blue-700 text-center items-center ml-5 text-white px-6 py-3 rounded-lg">
+                      Event Breakdown
+                    </Button>
+                    </div>
 
-            {/* Description */}
-            <div className="mb-8">
-              <p className="text-white/80 text-base leading-relaxed mb-4">
-                The crypto world is a wild ride—full of chaos, opportunity, and endless what-ifs. But one thing's for sure: innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers.
-              </p>
-              <p className="text-white/80 text-base leading-relaxed mb-4">
-                This isn't just another hackathon. It's a battlefield for fairness, a playground for disruptors, and a launchpad for the next wave of decentralized innovation. Whether you're an AI wizard
-              </p>
-            </div>
+                  </div>
 
-            {/* Prize Section */}
-            <div className="mb-8">
-              <div className="flex items-center gap-8 mb-6">
-                <div>
-                  <div className="text-[#4ade80] text-sm mb-2">Top Fairness Exploration Award (5 winners)</div>
-                  <div className="text-white text-4xl font-bold">50,000 USD</div>
-                  <div className="text-white/60 text-sm">Available in Prizes</div>
-                </div>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2" data-testid="button-event-breakdown">
-                  Event Breakdown
-                </Button>
-              </div>
+                 
 
-              {/* Prize Breakdown */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Fairness Explorer Gold Awards (5 winners)</div>
-                  <div className="text-white text-lg font-semibold">18,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Prize tracks (11 winners each Awards (4 winners)</div>
-                  <div className="text-white text-lg font-semibold">6,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Hackathon Integration Awards (4 winners)</div>
-                  <div className="text-white text-lg font-semibold">4,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Discovery Social Impact (1 winner)</div>
-                  <div className="text-white text-lg font-semibold">2,000 USD</div>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-4 gap-4 mb-8">
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">1st Place Integration on EVM Chain (3 winners)</div>
-                  <div className="text-white text-lg font-semibold">4,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Greenstand Data Documentation with B.A.R.K Framework (3 winners)</div>
-                  <div className="text-white text-lg font-semibold">4,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Challenge Mining & Security Winner (Pool 2016-2019) (1 winner)</div>
-                  <div className="text-white text-lg font-semibold">4,000 USD</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-white/60 text-sm">Open Innovation in Work Dev (Pool with Chaos E.I. Awards (1 winner)</div>
-                  <div className="text-white text-lg font-semibold">8,000 USD</div>
-                </div>
-              </div>
-            </div>
+                  {/* Prize Breakdown Grid */}
+                  <div className="col-span-3">
+                    <div className=" gap-1">
+                    <div className="text-center flex justify-between p-4 bg-transparent rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Fairness Explorer Gold Awards (5 winners)</div>
+                      <div className="text-white text-xl font-bold">18,000 USD</div>
+                    </div>
+                    <div className="text-center flex justify-between p-4 rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Prize tracks (11 winners each) (4 winners)</div>
+                      <div className="text-white text-xl font-bold">6,000 USD</div>
+                    </div>
+                    <div className="text-center flex justify-between p-4  rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Hackathon Integration Awards (4 winners)</div>
+                      <div className="text-white text-xl font-bold">4,000 USD</div>
+                    </div>
+                    <div className="text-center flex justify-between p-4  rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Discovery Social Impact (1 winner)</div>
+                      <div className="text-white text-xl font-bold">2,000 USD</div>
+                    </div>
 
-
-            
-
-            
-
-                <div>
-                  <h3 className="text-white text-xl font-semibold mb-4">Why ChainSpark Hackathon?</h3>
-                  <h4 className="text-white text-lg font-medium mb-3">Saluting the Early Rebels—Redefining Data & Collaboration</h4>
-                  <p className="text-white/80 text-base leading-relaxed">
-                    ChainSpark Hackathon was born from a simple but radical belief: true innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers. In an era of platform monopolies and divided creator value, ChainSpark is relying builders to forge a transparent, platform-agnostic, and verifiable future for data governance and the creator economy.
-                  </p>
+                    <div className=" text-center flex justify-between p-4 rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">1st Place Integration on EVM Chain (3 winners)</div>
+                      <div className="text-white  text-xl font-bold">4,000 USD</div>
+                    </div>
+                    <div className="text-center p-4 flex justify-between rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Greenstand Data Documentation with B.A.R.K Framework (3 winners)</div>
+                      <div className="text-white text-xl font-bold">4,000 USD</div>
+                    </div>
+                    <div className="text-center p-4 flex justify-between  rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Challenge Mining & Security Winner (Pool 2016-2019) (1 winner)</div>
+                      <div className="text-white text-xl font-bold">4,000 USD</div>
+                    </div>
+                    <div className="text-center p-4 flex justify-between  rounded-lg">
+                      <div className="text-[#6b7280] text-sm mb-2">Open Innovation in Work Dev (Pool with Chaos E.I. Awards) (1 winner)</div>
+                      <div className="text-white text-xl font-bold">8,000 USD</div>
+                    </div>
+                  </div>
+                  </div>
                 </div>
 
-                <div>
-                  <h3 className="text-white text-xl font-semibold mb-4">Why ChainSpark Hackathon?</h3>
-                  <h4 className="text-white text-lg font-medium mb-3">Saluting the Early Rebels—Redefining Data & Collaboration</h4>
-                  <p className="text-white/80 text-base leading-relaxed">
-                    ChainSpark Hackathon was born from a simple but radical belief: true innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers. In an era of platform monopolies and divided creator value, ChainSpark is relying builders to forge a transparent, platform-agnostic, and verifiable future for data governance and the creator economy.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-white text-xl font-semibold mb-4">Why ChainSpark Hackathon?</h3>
-                  <h4 className="text-white text-lg font-medium mb-3">Saluting the Early Rebels—Redefining Data & Collaboration</h4>
-                  <p className="text-white/80 text-base leading-relaxed">
-                    ChainSpark Hackathon was born from a simple but radical belief: true innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers. In an era of platform monopolies and divided creator value, ChainSpark is relying builders to forge a transparent, platform-agnostic, and verifiable future for data governance and the creator economy.
-                  </p>
+                {/* Why ChainSpark Hackathon Sections */}
+                <div className="space-y-8">
+                  <div className="bg-transparent border border-[#2b3640] rounded-2xl p-8">
+                    <h3 className="text-white text-xl font-semibold mb-4">Why ChainSpark Hackathon?</h3>
+                    <h4 className="text-white text-lg font-medium mb-3">Saluting the Early Rebels—Redefining Data & Collaboration</h4>
+                    <p className="text-[#9ca3af] text-base leading-relaxed">
+                      ChainSpark Hackathon was born from a simple but radical belief: true innovation shouldn't be strangled by black-box algorithms or centralized gatekeepers. In an era of platform monopolies and divided creator value, ChainSpark is relying builders to forge a transparent, platform-agnostic, and verifiable future for data governance and the creator economy.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
